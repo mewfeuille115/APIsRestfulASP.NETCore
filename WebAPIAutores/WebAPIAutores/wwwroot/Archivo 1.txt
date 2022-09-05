@@ -1,0 +1,17 @@
+Proceso iniciado
+Proceso en ejecución: 05/09/2022 10:04:13
+Proceso en ejecución: 05/09/2022 10:04:18
+Proceso en ejecución: 05/09/2022 10:04:23
+Proceso en ejecución: 05/09/2022 10:04:28
+Proceso en ejecución: 05/09/2022 10:04:33
+Proceso en ejecución: 05/09/2022 10:04:38
+Proceso en ejecución: 05/09/2022 10:04:43
+Proceso en ejecución: 05/09/2022 10:04:48
+Proceso en ejecución: 05/09/2022 10:04:53
+Proceso iniciado
+Proceso en ejecución: 05/09/2022 10:05:24
+Proceso en ejecución: 05/09/2022 10:05:29
+Proceso en ejecución: 05/09/2022 10:05:34
+Proceso en ejecución: 05/09/2022 10:05:39
+Proceso en ejecución: 05/09/2022 10:05:44
+Proceso finalizado
