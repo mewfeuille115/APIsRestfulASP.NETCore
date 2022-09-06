@@ -4,7 +4,6 @@ using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using WebAPIAutores.Filtros;
 using WebAPIAutores.Middlewares;
-using WebAPIAutores.Servicios;
 
 namespace WebAPIAutores
 {
@@ -27,20 +26,12 @@ namespace WebAPIAutores
                 .AddJsonOptions(x =>
                     // Ignora la referencia ciclica de las Entidades.   
                     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
-                );
+                )
+                .AddNewtonsoftJson();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
 
-            services.AddTransient<IServicio, ServicioA>();
-
-            services.AddTransient<ServicioTransient>();
-            services.AddScoped<ServicioScoped>();
-            services.AddSingleton<ServicioSingleton>();
-            services.AddTransient<MiFiltroDeAccion>();
-            services.AddHostedService<EscribirEnArchivo>();
-
-            services.AddResponseCaching();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 
             services.AddEndpointsApiExplorer();
@@ -48,20 +39,13 @@ namespace WebAPIAutores
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIAutores", Version = "v1" });
             });
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            //app.UseMiddleware<LoguearRespuestaHttpMiddleware>();
             app.UseLoguearRespuestaHttp();
-
-            app.Map("/ruta1", app =>
-            {
-                app.Run(async contexto =>
-                {
-                    await contexto.Response.WriteAsync("Estoy interceptando la tuberia");
-                });
-            });
 
             if (env.IsDevelopment())
             {
@@ -73,8 +57,6 @@ namespace WebAPIAutores
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseResponseCaching();
 
             app.UseAuthorization();
 
