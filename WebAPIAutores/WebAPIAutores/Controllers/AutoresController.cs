@@ -15,13 +15,25 @@ namespace WebAPIAutores.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
         public AutoresController(
             ApplicationDbContext context,
-            IMapper mapper)
+            IMapper mapper,
+            IConfiguration configuration)
         {
             _context = context;
             _mapper = mapper;
+           _configuration = configuration;
+        }
+
+        [HttpGet("Configuraciones")]
+        public ActionResult<string> ObtenerConfiguracion()
+        {
+            //return _configuration["connectionStrings:defaultConnectionToLocalDb"];
+            
+            // Esta es una variable desde user secxrets, por lo tanto está por encima de appsetting.Development.json 
+            return _configuration["apellido"];
         }
 
         [HttpGet] // api/autores
