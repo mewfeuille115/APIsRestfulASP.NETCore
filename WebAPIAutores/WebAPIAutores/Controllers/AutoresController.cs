@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,32 +12,22 @@ namespace WebAPIAutores.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "EsAdmin")]
     public class AutoresController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IConfiguration _configuration;
 
         public AutoresController(
             ApplicationDbContext context,
-            IMapper mapper,
-            IConfiguration configuration)
+            IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-           _configuration = configuration;
-        }
-
-        [HttpGet("Configuraciones")]
-        public ActionResult<string> ObtenerConfiguracion()
-        {
-            //return _configuration["connectionStrings:defaultConnectionToLocalDb"];
-            
-            // Esta es una variable desde user secxrets, por lo tanto está por encima de appsetting.Development.json 
-            return _configuration["apellido"];
         }
 
         [HttpGet] // api/autores
+        [AllowAnonymous]
         public async Task<ActionResult<List<AutorDto>>> Get()
         {
             //var autores = await _context.Autores.Include(x => x.Libros).ToListAsync();
