@@ -136,6 +136,8 @@ namespace WebAPIAutores
 			services.AddTransient<GeneradorEnlaces>();
 			services.AddTransient<HateoasAutorFilterAttribute>();
 			services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
+			services.AddApplicationInsightsTelemetry(Configuration["ApplicationInsights:ConnectionString"]);
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
