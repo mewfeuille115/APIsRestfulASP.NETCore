@@ -11,11 +11,11 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  proyecto: '**/WebAPIAutores.csproj'
+  proyecto: '**/**/WebAPIAutores.csproj'
 
 steps:
 - task: UseDotNet@2
-  displayName: 'Instalando Preview ASP.NET Core 6'
+  displayName: 'Instalando ASP.NET Core 6'
   inputs:
     packageType: 'sdk'
     version: '6.x'
