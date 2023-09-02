@@ -1,24 +1,25 @@
-# ASP.NET
-# Build and test ASP.NET projects.
-# Add steps that publish symbols, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
   buildConfiguration: 'Release'
-  proyecto: '**/**/WebAPIAutores.csproj'
+  proyecto: 'WebAPIAutores/WebAPIAutores.csproj'
 
 steps:
 - task: UseDotNet@2
-  displayName: 'Instalando ASP.NET Core 6'
+  displayName: 'Instalando Preview ASP.NET Core 6'
   inputs:
     packageType: 'sdk'
-    version: '6.x'
+    version: '6.0.100-preview.4.21255.9'
+    includePreviewVersions: true
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 - task: CmdLine@2
@@ -35,7 +36,7 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: $(proyecto)
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --runtime win-x64'
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --runtime win-x64 --self-contained'
     zipAfterPublish: false
     modifyOutputPath: false
 - task: PublishBuildArtifacts@1
