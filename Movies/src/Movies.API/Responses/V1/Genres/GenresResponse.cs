@@ -1,11 +1,11 @@
 ﻿using Movies.Application.Features.Genres.Queries.GetGenres;
 using System.Text.Json.Serialization;
 
-namespace Movies.API.Responses.V1.Genre;
+namespace Movies.API.Responses.V1.Genres;
 
-public record GetGenreListResponse : GenreListResponse
+public record GenresResponse : GetGenresQueryResponse
 {
-	public GetGenreListResponse(GenreListResponse original) : base(original)
+	public GenresResponse(GetGenresQueryResponse original) : base(original)
 	{
 	}
 

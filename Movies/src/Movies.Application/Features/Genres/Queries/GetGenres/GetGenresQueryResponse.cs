@@ -2,15 +2,15 @@
 
 namespace Movies.Application.Features.Genres.Queries.GetGenres;
 
-public record GenreListResponse
+public record GetGenresQueryResponse
 {
-	public GenreListResponse(int id, string name)
+	public GetGenresQueryResponse(int id, string name)
 	{
 		Id = id;
 		Name = name;
 	}
 
-	public GenreListResponse(Genre genre)
+	public GetGenresQueryResponse(Genre genre)
 	{
 		Id = genre.Id;
 		Name = genre.Name;

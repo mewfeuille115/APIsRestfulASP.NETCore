@@ -6,14 +6,14 @@ using System.Collections.Immutable;
 namespace Movies.Application.Features.Genres.Queries.GetGenres;
 
 public class GetGenresQueryHandler(IGenreRepository genreRepository)
-	: IRequestHandler<GetGenresQuery, ListResponse<GenreListResponse>>
+	: IRequestHandler<GetGenresQuery, ListResponse<GetGenresQueryResponse>>
 {
-	public async Task<ListResponse<GenreListResponse>> Handle(GetGenresQuery request, CancellationToken cancellationToken)
+	public async Task<ListResponse<GetGenresQueryResponse>> Handle(GetGenresQuery request, CancellationToken cancellationToken)
 	{
 		var genres = await genreRepository.ListAllAsync(request.Page, cancellationToken);
-		var data = genres.Select(genre => new GenreListResponse(genre))
+		var data = genres.Select(genre => new GetGenresQueryResponse(genre))
 			.ToImmutableList();
 
-		return new ListResponse<GenreListResponse>(data);
+		return new ListResponse<GetGenresQueryResponse>(data);
 	}
 }

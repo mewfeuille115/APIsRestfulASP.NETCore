@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Movies.API.Helpers;
 using Movies.API.Responses;
-using Movies.API.Responses.V1.Genre;
+using Movies.API.Responses.V1.Genres;
 using Movies.Application.Features.Genres.Commands.CreateGenre;
 using Movies.Application.Features.Genres.Commands.DeleteGenre;
 using Movies.Application.Features.Genres.Commands.UpdateGenre;
@@ -24,12 +24,12 @@ public class GenresController(
 	/// </summary>
 	/// <returns></returns>
 	[HttpGet(Name = "GetGenres")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListLinkResponse<GetGenreListResponse>))]
-	public async Task<ActionResult<ListLinkResponse<GetGenreListResponse>>> Get([FromQuery] PageDto pageDto)
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListLinkResponse<GenresResponse>))]
+	public async Task<IActionResult> Get([FromQuery] PageDto pageDto)
 	{
 		var result = await mediator.Send(new GetGenresQuery(pageDto));
 
-		var resultWithLinks = result.Data.Select(genre => new GetGenreListResponse(genre)
+		var resultWithLinks = result.Data.Select(genre => new GenresResponse(genre)
 		{
 			Links =
 			[
@@ -39,9 +39,9 @@ public class GenresController(
 			],
 		});
 
-		var listResponse = new ListResponse<GetGenreListResponse>(resultWithLinks.ToList());
+		var listResponse = new ListResponse<GenresResponse>(resultWithLinks.ToList());
 
-		var listResponseWithLinks = new ListLinkResponse<GetGenreListResponse>(listResponse)
+		var listResponseWithLinks = new ListLinkResponse<GenresResponse>(listResponse)
 		{
 			Links =
 			[
@@ -58,13 +58,13 @@ public class GenresController(
 	/// <param name="id">Id of the genre.</param>
 	/// <returns></returns>
 	[HttpGet("{id:int}", Name = "GetGenre")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LinkResponse<GenreResponse>))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LinkResponse<GetGenreQueryResponse>))]
 	[ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(BaseResponse))]
-	public async Task<ActionResult<LinkResponse<GenreResponse>>> Get([FromRoute] int id)
+	public async Task<IActionResult> Get([FromRoute] int id)
 	{
 		var result = await mediator.Send(new GetGenreQuery(id));
 
-		var response = new LinkResponse<GenreResponse>(
+		var response = new LinkResponse<GetGenreQueryResponse>(
 			result.Data, result.Message, result.Success, result.ValidationErrors)
 		{
 			Links =
@@ -86,7 +86,7 @@ public class GenresController(
 	[HttpPost(Name = "CreateGenre")]
 	[ProducesResponseType(StatusCodes.Status201Created, Type = typeof(LinkResponse<CreateGenreCommandResponse>))]
 	[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(BaseResponse))]
-	public async Task<ActionResult> Post([FromBody] CreateGenreCommand createGenreCommand)
+	public async Task<IActionResult> Post([FromBody] CreateGenreCommand createGenreCommand)
 	{
 		var result = await mediator.Send(createGenreCommand);
 
@@ -101,22 +101,22 @@ public class GenresController(
 			],
 		};
 
-		return new CreatedAtRouteResult("GetGenre", new { id = result.Data.Id }, response);
+		return CreatedAtRoute("GetGenre", new { id = result.Data.Id }, response);
 	}
 
 	/// <summary>
-	/// Update a exist genre.
+	/// Update an exist genre.
 	/// </summary>
 	/// <param name="updateGenreCommand">Genre to update.</param>
 	/// <returns></returns>
 	[HttpPut(Name = "UpdateGenre")]
 	[ProducesResponseType(StatusCodes.Status204NoContent)]
 	[ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(BaseResponse))]
-	public async Task<ActionResult> Put([FromBody] UpdateGenreCommand updateGenreCommand)
+	public async Task<IActionResult> Put([FromBody] UpdateGenreCommand updateGenreCommand)
 	{
 		await mediator.Send(updateGenreCommand);
 
-		return new NoContentResult();
+		return NoContent();
 	}
 
 	/// <summary>
@@ -127,10 +127,10 @@ public class GenresController(
 	[HttpDelete("{id:int}", Name = "DeleteGenre")]
 	[ProducesResponseType(StatusCodes.Status204NoContent)]
 	[ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(BaseResponse))]
-	public async Task<ActionResult> Delete([FromRoute] int id)
+	public async Task<IActionResult> Delete([FromRoute] int id)
 	{
 		await mediator.Send(new DeleteGenreCommand(id));
 
-		return new NoContentResult();
+		return NoContent();
 	}
 }

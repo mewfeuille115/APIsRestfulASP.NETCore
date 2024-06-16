@@ -4,4 +4,4 @@ using Movies.Application.Responses;
 
 namespace Movies.Application.Features.Genres.Queries.GetGenres;
 
-public record GetGenresQuery(PageDto Page) : IRequest<ListResponse<GenreListResponse>>;
+public record GetGenresQuery(PageDto Page) : IRequest<ListResponse<GetGenresQueryResponse>>;
