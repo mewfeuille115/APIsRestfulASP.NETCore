@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{A49B6B0D-7086-48EB-83ED-B5B10F144195}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{20088D68-B267-4D92-B7A3-72EDA61C95BD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{20088D68-B267-4D92-B7A3-72EDA61C95BD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{24FFFAE4-A118-4BDF-B82B-7E4C62EBCBB7}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Persistence", "src\Movies.Persistence\Movies.Persistence.csproj", "{4A16A514-7D72-4822-A288-9ABB1894C534}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Application", "src\Movies.Application\Movies.Application.csproj", "{4C44B1CD-492F-4BC6-87F0-A19ECE3EFED2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Storage", "Movies.Storage\Movies.Storage.csproj", "{516E4A4E-0E70-404F-8A9C-8EC502C36E12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{4C44B1CD-492F-4BC6-87F0-A19ECE3EFED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C44B1CD-492F-4BC6-87F0-A19ECE3EFED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C44B1CD-492F-4BC6-87F0-A19ECE3EFED2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{516E4A4E-0E70-404F-8A9C-8EC502C36E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516E4A4E-0E70-404F-8A9C-8EC502C36E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516E4A4E-0E70-404F-8A9C-8EC502C36E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516E4A4E-0E70-404F-8A9C-8EC502C36E12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{FDB3DEAC-5099-4F9F-A5D4-B42F01568796} = {A49B6B0D-7086-48EB-83ED-B5B10F144195}
 		{4A16A514-7D72-4822-A288-9ABB1894C534} = {20088D68-B267-4D92-B7A3-72EDA61C95BD}
 		{4C44B1CD-492F-4BC6-87F0-A19ECE3EFED2} = {A49B6B0D-7086-48EB-83ED-B5B10F144195}
+		{516E4A4E-0E70-404F-8A9C-8EC502C36E12} = {20088D68-B267-4D92-B7A3-72EDA61C95BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {716C0CC7-85D7-4A83-B105-E378D3BCA8B8}

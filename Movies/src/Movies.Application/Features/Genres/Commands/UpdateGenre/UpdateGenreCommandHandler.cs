@@ -19,7 +19,7 @@ public class UpdateGenreCommandHandler(IGenreRepository genreRepository)
 			throw new ValidatorException(validationResult);
 
 		genreToUpdate.Name = request.Name;
-		genreRepository.Update(genreToUpdate);
+		genreRepository.Update(genreToUpdate, string.Empty);
 		await genreRepository.SaveChangesAsync(cancellationToken);
 
 		return Unit.Value;

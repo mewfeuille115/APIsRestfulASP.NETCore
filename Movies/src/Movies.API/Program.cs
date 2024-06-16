@@ -1,11 +1,13 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Movies.API.Helpers;
+using Movies.API.Helpers.Formatters;
 using Movies.API.Middleware;
 using Movies.Application;
 using Movies.Persistence;
+using Movies.Storage;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -13,7 +15,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-	.AddControllers()
+	.AddControllers(options =>
+		// Add support for JSON Patch using NewtonSoft, while leaving the other input and output formatters unchanged
+		options.InputFormatters.Insert(0, JsonPatchInputFormatter.GetJsonPatchInputFormatter())
+	)
 	.AddJsonOptions(x =>
 		// Ignores the cyclical reference of the Entities.
 		x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
@@ -32,6 +37,7 @@ builder.Services.AddScoped<HypermediaLinkService>();
 // Add the services for the application and persistence layers.
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddStorageServices(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

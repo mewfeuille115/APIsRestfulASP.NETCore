@@ -44,6 +44,20 @@ public class HypermediaLinkService(IUrlHelper urlHelper)
 		};
 	}
 
+	public LinkBase AddPartialUpdateLink(string routeName, string rel)
+	{
+		if (string.IsNullOrEmpty(routeName))
+		{
+			throw new ArgumentNullException(nameof(routeName));
+		}
+		return new LinkBase
+		{
+			Href = urlHelper.Link(routeName, new { }),
+			Method = "PATCH",
+			Rel = $"partial-update-{rel.ToLower()}",
+		};
+	}
+
 	public LinkBase AddDeleteLink(string routeName, object routeValues, string rel)
 	{
 		return new LinkBase

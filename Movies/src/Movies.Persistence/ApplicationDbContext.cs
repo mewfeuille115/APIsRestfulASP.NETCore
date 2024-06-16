@@ -10,4 +10,5 @@ public class ApplicationDbContext : DbContext
 	}
 
 	public DbSet<Genre> Genres => Set<Genre>();
+	public DbSet<Actor> Actors => Set<Actor>();
 }

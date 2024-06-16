@@ -17,7 +17,7 @@ public class CreateGenreCommandHandler(IGenreRepository genreRepository)
 			throw new ValidatorException(validatorResult);
 
 		var genreToCreate = new Genre { Name = request.Name };
-		genreToCreate = await genreRepository.AddAsync(genreToCreate, cancellationToken);
+		genreToCreate = await genreRepository.AddAsync(genreToCreate, string.Empty, cancellationToken);
 		await genreRepository.SaveChangesAsync(cancellationToken);
 
 		var data = new CreateGenreCommandResponse(genreToCreate!.Id, genreToCreate!.Name);

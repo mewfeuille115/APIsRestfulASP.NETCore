@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Movies.Application.Contracts.Persistence;
 using Movies.Application.Pages;
 using Movies.Application.Utilities;
+using Movies.Domain.Common;
 
 namespace Movies.Persistence.Repositories;
 
-public class BaseRepository<T, TId> : IBaseRepository<T, TId> where T : class
+public class BaseRepository<T, TId> : IBaseRepository<T, TId> where T : AuditableEntity
 {
 	protected readonly ApplicationDbContext _dbContext;
 	protected DbSet<T> Entities => _dbContext.Set<T>();
@@ -25,15 +26,22 @@ public class BaseRepository<T, TId> : IBaseRepository<T, TId> where T : class
 		.Page(page)
 		.ToListAsync(cancellationToken);
 
-	public async Task<T?> AddAsync(T entity, CancellationToken cancellationToken)
+	public async Task<T?> AddAsync(T entity, string userId, CancellationToken cancellationToken)
 	{
+		entity.CreatedBy = userId;
+		entity.CreatedDate = DateTime.UtcNow;
 		EntityEntry<T> insertedValue = await _dbContext.Set<T>().AddAsync(entity, cancellationToken);
 
 		return insertedValue?.Entity;
 	}
 
-	public T? Update(T entity)
-		=> _dbContext.Set<T>().Update(entity)?.Entity;
+	public T? Update(T entity, string userId)
+	{
+		entity.LastModifiedBy = userId;
+		entity.LastModifiedDate = DateTime.UtcNow;
+
+		return _dbContext.Set<T>().Update(entity)?.Entity;
+	}
 
 	public void Delete(T entity)
 	{
