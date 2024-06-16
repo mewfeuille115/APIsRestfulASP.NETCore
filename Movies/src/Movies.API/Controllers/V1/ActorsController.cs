@@ -38,7 +38,7 @@ public class ActorsController(
 			[
 				linkService.AddSelfLink("GetActor", new { actor.Id }),
 				linkService.AddUpdateLink("UpdateActor", "actor"),
-				linkService.AddPartialUpdateLink("PartialUpdateActor", "actor"),
+				linkService.AddPartialUpdateLink("PartialUpdateActor", new { actor.Id }, "actor"),
 				linkService.AddDeleteLink("DeleteActor", new { actor.Id }, "actor"),
 			],
 		});
@@ -75,7 +75,7 @@ public class ActorsController(
 			[
 				linkService.AddSelfLink("GetActor", new { result.Data!.Id }),
 				linkService.AddUpdateLink("UpdateActor", "actor"),
-				linkService.AddPartialUpdateLink("PartialUpdateActor", "actor"),
+				linkService.AddPartialUpdateLink("PartialUpdateActor", new { result.Data.Id }, "actor"),
 				linkService.AddDeleteLink("DeleteActor", new { result.Data.Id }, "actor"),
 			],
 		};
@@ -107,7 +107,7 @@ public class ActorsController(
 			[
 				linkService.AddSelfLink("GetActor", new { result.Data.Id }),
 				linkService.AddUpdateLink("UpdateActor", "actor"),
-				linkService.AddPartialUpdateLink("PartialUpdateActor", "actor"),
+				linkService.AddPartialUpdateLink("PartialUpdateActor", new { result.Data.Id }, "actor"),
 				linkService.AddDeleteLink("DeleteActor", new { result.Data.Id }, "actor"),
 			],
 		};

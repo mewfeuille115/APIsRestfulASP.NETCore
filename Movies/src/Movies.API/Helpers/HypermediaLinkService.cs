@@ -44,7 +44,7 @@ public class HypermediaLinkService(IUrlHelper urlHelper)
 		};
 	}
 
-	public LinkBase AddPartialUpdateLink(string routeName, string rel)
+	public LinkBase AddPartialUpdateLink(string routeName, object routeValues, string rel)
 	{
 		if (string.IsNullOrEmpty(routeName))
 		{
@@ -52,7 +52,7 @@ public class HypermediaLinkService(IUrlHelper urlHelper)
 		}
 		return new LinkBase
 		{
-			Href = urlHelper.Link(routeName, new { }),
+			Href = urlHelper.Link(routeName, routeValues),
 			Method = "PATCH",
 			Rel = $"partial-update-{rel.ToLower()}",
 		};
